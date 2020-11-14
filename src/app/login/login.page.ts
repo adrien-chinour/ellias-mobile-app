@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
-import {AuthenticationService} from '../core/auth/authentication.service';
-import {User} from '../shared/models/user';
+import {AuthenticationService} from '../@core/auth/authentication.service';
 
 @Component({
     selector: 'app-login',
@@ -21,6 +20,7 @@ export class LoginPage implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService
     ) {
+        console.log(this.authenticationService.currentUserValue);
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
@@ -35,8 +35,6 @@ export class LoginPage implements OnInit {
     login(form) {
         this.authenticationService.login(form.value.username, form.value.password)
             .pipe(first())
-            .subscribe(res => {
-                this.router.navigate([this.returnUrl]);
-            });
+            .subscribe(() => this.router.navigate([this.returnUrl]));
     }
 }

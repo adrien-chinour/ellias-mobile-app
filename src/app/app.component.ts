@@ -5,8 +5,8 @@ import {Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 
-import {AuthenticationService} from './core/auth/authentication.service';
-import {User} from './shared/models/user';
+import {AuthenticationService} from './@core/auth/authentication.service';
+import {User} from './@core/auth/user';
 
 @Component({
     selector: 'app-root',
