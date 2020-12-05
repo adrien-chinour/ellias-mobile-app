@@ -5,15 +5,11 @@
   "author": "Adiren Chinour <github@chinour.fr>",
   "homepage": "https://github.com/adrien-chinour/ellias-mobile-app",
   "scripts": {
-    "ng": "ng",
-    "start": "ionic serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "ionic serve"
   },
   "private": true,
   "dependencies": {
+    "npm": "^6.14",
     "@angular/common": "~8.2.14",
     "@angular/core": "~8.2.14",
     "@angular/forms": "~8.2.14",
