@@ -45,9 +45,6 @@ workflows:
                                 cd android
                                 gradle assemble
                                 mv "${default_apk_dir}/${default_apk_name}" "${BITRISE_DEPLOY_DIR}/${default_apk_name}"
-            -   bitrise-artifact-deploy@1:
-                    inputs:
-                        -   is_compress: 'false'
     build-ios:
         steps:
 
