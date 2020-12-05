@@ -8,7 +8,8 @@ app:
 workflows:
     setup:
         steps:
-            -   activate-ssh-key@4: { }
+            -   activate-ssh-key@4:
+                    run_if: '{{getenv "BITRISE_BUILD_URL" | ne ""}}'
             -   git-clone@4: { }
             -   script@1:
                     title: Build the app for distribution
@@ -21,7 +22,8 @@ workflows:
                                 ionic cap sync
                                 mv android "${BITRISE_DEPLOY_DIR}/android"
                                 mv ios "${BITRISE_DEPLOY_DIR}/ios"
-            -   deploy-to-bitrise-io@1: { }
+            -   deploy-to-bitrise-io@1:
+                    run_if: '{{getenv "BITRISE_BUILD_URL" | ne ""}}'
     build-android:
         before_run:
             - setup
@@ -43,7 +45,8 @@ workflows:
                                 cd android
                                 gradle assemble
                                 mv app/build/outputs/apk/app-debug.apk "${BITRISE_DEPLOY_DIR}/app-debug.apk"
-            -   deploy-to-bitrise-io@1: { }
+            -   deploy-to-bitrise-io@1:
+                    run_if: '{{getenv "BITRISE_BUILD_URL" | ne ""}}'
     build-ios:
         before_run:
             - setup
