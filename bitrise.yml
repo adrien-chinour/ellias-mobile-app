@@ -13,25 +13,8 @@ workflows:
             -   activate-ssh-key@4:
                     run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
             -   git-clone@4: { }
-            -   npm@1:
-                    title: Install npm dependencies
-                    inputs:
-                        -   command: install --no-optional
-            -   npm@1:
-                    title: Ionic & Capacitor setup
-                    inputs:
-                        -   command:
-                            - install -g @ionic/cli
-                            - ionic cap build
             -   script@1:
-                    title: Do anything with Script step
+                    title: Capacitor build
                     inputs:
-                        -   content: |-
-                                #!/usr/bin/env bash
-                                # fail if any commands fails
-                                set -e
-                                # debug log
-                                set -x
-                                # write your script here
-                                echo "Hello world"
+                        -   content: bash .bitrise/ionic-setup.sh
             -   deploy-to-bitrise-io@1: { }
