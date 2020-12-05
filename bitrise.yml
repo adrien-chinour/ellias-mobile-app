@@ -16,11 +16,13 @@ workflows:
             -   npm@1:
                     title: Install npm dependencies
                     inputs:
-                        -   command: install
+                        -   command: install --no-optional
             -   npm@1:
                     title: Ionic & Capacitor setup
                     inputs:
-                        -   command: install -g @ionic/cli
+                        -   command:
+                            - install -g @ionic/cli
+                            - ionic cap build
             -   script@1:
                     title: Do anything with Script step
                     inputs:
