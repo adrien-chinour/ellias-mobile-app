@@ -8,4 +8,4 @@ echo "Build ionic project"
 ionic build
 
 echo "Build Android & iOS project with Capacitor"
-ionic cap build
+ionic cap sync
