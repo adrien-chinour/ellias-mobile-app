@@ -7,8 +7,8 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {ErrorInterceptor} from './@core/auth/error.interceptor';
-import {JwtInterceptor} from './@core/auth/jwt.interceptor';
+import {ErrorInterceptor} from './@core/interceptor/error.interceptor';
+import {JwtInterceptor} from './@core/interceptor/jwt.interceptor';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({

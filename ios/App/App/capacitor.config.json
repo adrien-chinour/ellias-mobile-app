@@ -1,1 +1,8 @@
-{}
+{
+  "appId": "ellias.app",
+  "appName": "ellias-mobile-app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

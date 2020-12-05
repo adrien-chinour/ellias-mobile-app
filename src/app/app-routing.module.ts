@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 
-import {AuthGuard} from './@core/auth/auth.guard';
+import {AuthenticationGuard} from './@core/authentication/authentication.guard';
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {
         path: 'home',
         loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-        canActivate: [AuthGuard]
+        canActivate: [AuthenticationGuard]
     },
     {
         path: 'login',
@@ -17,7 +17,7 @@ const routes: Routes = [
     {
         path: 'create-alias',
         loadChildren: () => import('./create-alias/create-alias.module').then(m => m.CreateAliasPageModule),
-        canActivate: [AuthGuard]
+        canActivate: [AuthenticationGuard]
     },
     {path: '**', redirectTo: ''},
 ];
