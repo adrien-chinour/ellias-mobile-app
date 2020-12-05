@@ -4,9 +4,7 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 trigger_map:
     -   push_branch: "master"
-        workflow:
-            - build-android
-            - build-ios
+        workflow: build
 workflows:
     setup:
         steps:
@@ -18,9 +16,6 @@ workflows:
                     inputs:
                         -   content: bash .bitrise/ionic-setup.sh
             -   deploy-to-bitrise-io@1: { }
-    build-android:
-        before_run:
-            - setup
-    build-ios:
+    build:
         before_run:
             - setup
