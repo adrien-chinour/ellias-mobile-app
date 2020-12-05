@@ -4,13 +4,11 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 app:
     envs:
-        -   default_apk_dir: "./app/build/outputs/apk"
         -   default_apk_name: app-debug.apk
 workflows:
-    _ci_setup:
+    setup:
         steps:
-            -   activate-ssh-key@4:
-                    run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+            -   activate-ssh-key@4: { }
             -   git-clone@4: { }
             -   script@1:
                     title: Build the app for distribution
@@ -18,15 +16,15 @@ workflows:
                         -   content: |-
                                 #!/bin/bash
                                 set -ex
-                                #
                                 npm install
                                 npm install -g @ionic/cli
                                 ionic cap sync
-    _ci_finish:
-        steps:
-            -   deploy-to-bitrise-io@1.2.6:
-                    run_if: '{{getenv "BITRISE_BUILD_URL" | ne ""}}'
+                                mv android "${BITRISE_DEPLOY_DIR}/android"
+                                mv ios "${BITRISE_DEPLOY_DIR}/ios"
+            -   deploy-to-bitrise-io@1: { }
     build-android:
+        before_run:
+            - setup
         steps:
             -   script@1:
                     title: gradlew
@@ -44,19 +42,9 @@ workflows:
                                 set -ex
                                 cd android
                                 gradle assemble
-                                mv "${default_apk_dir}/${default_apk_name}" "${BITRISE_DEPLOY_DIR}/${default_apk_name}"
+                                mv app/build/outputs/apk/app-debug.apk "${BITRISE_DEPLOY_DIR}/app-debug.apk"
+            -   deploy-to-bitrise-io@1: { }
     build-ios:
+        before_run:
+            - setup
         steps:
-
-    ci-ios:
-        before_run:
-            - _ci_setup
-        after_run:
-            - build-ios
-            - _ci_finish
-    ci-android:
-        before_run:
-            - _ci_setup
-        after_run:
-            - build-android
-            - _ci_finish
