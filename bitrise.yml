@@ -7,25 +7,24 @@ app:
         -   default_apk_dir: "./app/build/outputs/apk"
         -   default_apk_name: app-debug.apk
 workflows:
-    setup:
-        _ci_setup:
-            -   activate-ssh-key@4:
-                    run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
-            -   git-clone@4: { }
-            -   script@1.1.3:
-                    title: Build the app for distribution
-                    inputs:
-                        -   content: |-
-                                #!/bin/bash
-                                set -ex
-                                #
-                                npm install
-                                npm install -g @ionic/cli
-                                ionic cap sync
-        _ci_finish:
-            steps:
-                -   deploy-to-bitrise-io@1.2.6:
-                        run_if: '{{getenv "BITRISE_BUILD_URL" | ne ""}}'
+    _ci_setup:
+        -   activate-ssh-key@4:
+                run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+        -   git-clone@4: { }
+        -   script@1.1.3:
+                title: Build the app for distribution
+                inputs:
+                    -   content: |-
+                            #!/bin/bash
+                            set -ex
+                            #
+                            npm install
+                            npm install -g @ionic/cli
+                            ionic cap sync
+    _ci_finish:
+        steps:
+            -   deploy-to-bitrise-io@1.2.6:
+                    run_if: '{{getenv "BITRISE_BUILD_URL" | ne ""}}'
     build-android:
         steps:
             -   script@1:
