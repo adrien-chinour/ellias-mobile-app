@@ -4,11 +4,11 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 trigger_map:
     -   push_branch: "*"
-        workflow: primary
+        workflow: build
     -   pull_request_source_branch: "*"
-        workflow: primary
+        workflow: build
 workflows:
-    primary:
+    setup:
         steps:
             -   activate-ssh-key@4:
                     run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
@@ -18,3 +18,7 @@ workflows:
                     inputs:
                         -   content: bash .bitrise/ionic-setup.sh
             -   deploy-to-bitrise-io@1: { }
+    build:
+        before_run:
+            - setup
+
